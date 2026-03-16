@@ -1,25 +1,25 @@
-def calculate_profit(deal):
+from app.database import SessionLocal
+from app.models.deal import Deal
 
-    arv = deal.arv
-    price = deal.price
-    repair = deal.estimated_repair
+def score_deals():
 
-    profit = arv - (price + repair)
+    db = SessionLocal()
 
-    return profit
+    deals = db.query(Deal).all()
 
+    for deal in deals:
 
-def score_deal(deal):
+        score = 0
 
-    profit = calculate_profit(deal)
+        if deal.profit_margin > 20000:
+            score += 40
 
-    if profit > 70000:
-        return "A+ Deal"
+        if deal.repair_cost < 50000:
+            score += 20
 
-    if profit > 40000:
-        return "Good Deal"
+        if deal.city in ["Dallas", "Phoenix", "Atlanta"]:
+            score += 30
 
-    if profit > 20000:
-        return "Average"
+        deal.score = score
 
-    return "Low Margin"
+    db.commit()
