@@ -1,8 +1,36 @@
+import requests
+from bs4 import BeautifulSoup
 
-from fastapi import APIRouter
+SOURCE = "redfin"
 
-router = APIRouter(prefix="/finance",tags=["finance"])
 
-@router.post("/apply")
-def apply(application:dict):
-    return {"status":"submitted","application":application}
+def fetch_redfin(city="Dallas"):
+
+    url = f"https://www.redfin.com/city/{city}"
+
+    headers = {
+        "User-Agent": "Mozilla/5.0"
+    }
+
+    response = requests.get(url, headers=headers)
+
+    soup = BeautifulSoup(response.text, "html.parser")
+
+    listings = []
+
+    items = soup.select(".homecard")
+
+    for item in items[:20]:
+
+        listings.append({
+            "title": item.text.strip(),
+            "city": city,
+            "source": SOURCE
+        })
+
+    return listings
+
+
+def run():
+    deals = fetch_redfin()
+    print("Redfin deals:", deals)
