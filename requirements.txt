@@ -2,10 +2,9 @@ fastapi
 uvicorn
 sqlalchemy
 psycopg2-binary
-pydantic
-requests
 redis
+rq
+requests
+beautifulsoup4
+pydantic
 python-dotenv
-passlib
-python-jose
-pytest
