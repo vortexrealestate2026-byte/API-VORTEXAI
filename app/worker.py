@@ -1,24 +1,16 @@
 import time
-import logging
 
 from app.pipelines.pipeline_manager import run_all_pipelines
+from app.ai.deal_scoring_ai import score_deals
+from app.ai.buyer_match_ai import match_buyers
 
 
-logging.basicConfig(level=logging.INFO)
+while True:
 
+    run_all_pipelines()
+    score_deals()
+    match_buyers()
 
-def start_worker():
+    print("Cycle finished")
 
-    while True:
-
-        logging.info("Starting pipeline cycle")
-
-        run_all_pipelines()
-
-        logging.info("Sleeping 30 minutes")
-
-        time.sleep(1800)
-
-
-if __name__ == "__main__":
-    start_worker()
+    time.sleep(1800)
