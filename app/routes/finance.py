@@ -1,8 +1,25 @@
-
 from fastapi import APIRouter
+from pydantic import BaseModel
 
-router = APIRouter(prefix="/auth",tags=["auth"])
+router = APIRouter(prefix="/finance", tags=["Finance"])
 
-@router.post("/login")
-def login():
-    return {"token":"implement-authentication"}
+
+class FinanceApplication(BaseModel):
+
+    name: str
+    email: str
+    phone: str
+    income: float
+    credit_score: int
+    vehicle: str
+
+
+@router.post("/apply")
+def apply_financing(app: FinanceApplication):
+
+    # In production this would submit to lenders
+    return {
+        "status": "received",
+        "applicant": app.name,
+        "vehicle": app.vehicle
+    }
