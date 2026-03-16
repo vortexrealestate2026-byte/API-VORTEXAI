@@ -1,11 +1,7 @@
-from redis import Redis
-from rq import Queue
+from app.agents.wholesale_agents import run_wholesale_agents
+from app.agents.car_finance_agents import run_finance_agents
 
-redis_conn = Redis()
-queue = Queue(connection=redis_conn)
+async def start_agents():
 
-def run_scraper():
-
-    from app.services.property_scraper import get_properties
-
-    return get_properties()
+    run_wholesale_agents()
+    run_finance_agents()
