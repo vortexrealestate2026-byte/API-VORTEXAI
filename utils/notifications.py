@@ -1,0 +1,6 @@
+import smtplib
+
+
+def send_email(to_email, subject, message):
+
+    print(f"Sending email to {to_email}")
