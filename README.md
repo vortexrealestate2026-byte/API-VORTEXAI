@@ -1,28 +1,33 @@
-version: "3.9"
+# Vortex AI API
 
-services:
+Backend API for the Vortex AI Deal Engine.
 
-  api:
-    build: .
-    container_name: vortex_api
-    ports:
-      - "8000:8000"
-    depends_on:
-      - redis
-    volumes:
-      - .:/app
+## Features
 
-  worker:
-    build: .
-    container_name: vortex_worker
-    command: celery -A app.worker worker --loglevel=info
-    depends_on:
-      - redis
-    volumes:
-      - .:/app
+- Wholesale deal ingestion
+- Vehicle inventory pipelines
+- Buyer matching
+- Financing submissions
+- AI automation pipelines
 
-  redis:
-    image: redis:7
-    container_name: vortex_redis
-    ports:
-      - "6379:6379"
+## Tech Stack
+
+- FastAPI
+- Python
+- Redis
+- Celery
+- Docker
+
+## Run with Docker
+
+Build and start system:
+
+docker-compose up --build
+
+API will run at:
+
+http://localhost:8000
+
+API Docs:
+
+http://localhost:8000/docs
