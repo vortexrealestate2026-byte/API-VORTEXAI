@@ -1,5 +1,5 @@
 #!/bin/bash
 
-echo "Starting Vortex AI Platform..."
+echo "Starting Vortex AI API..."
 
-docker-compose up --build
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
