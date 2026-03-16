@@ -26,52 +26,70 @@ from app.pipelines.marketing.google_ads_pipeline import run as google_ads_pipeli
 from app.pipelines.marketing.tiktok_ads_pipeline import run as tiktok_ads_pipeline
 
 
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s"
+)
+
+
+def safe_run(pipeline, name):
+
+    try:
+
+        logging.info(f"Running pipeline: {name}")
+
+        pipeline()
+
+        logging.info(f"{name} finished")
+
+    except Exception as e:
+
+        logging.error(f"{name} FAILED: {e}")
 
 
 def run_vehicle_pipelines():
 
-    logging.info("Running vehicle pipelines")
+    logging.info("Vehicle pipelines starting")
 
-    autotrader_pipeline()
-    cars_pipeline()
-    dealer_inventory_pipeline()
-    tradein_pipeline()
+    safe_run(autotrader_pipeline, "Autotrader Pipeline")
+    safe_run(cars_pipeline, "Cars Pipeline")
+    safe_run(dealer_inventory_pipeline, "Dealer Inventory Pipeline")
+    safe_run(tradein_pipeline, "Trade-in Pipeline")
 
 
 def run_real_estate_pipelines():
 
-    logging.info("Running real estate pipelines")
+    logging.info("Real estate pipelines starting")
 
-    zillow_pipeline()
-    redfin_pipeline()
-    probate_pipeline()
-    tax_pipeline()
-    vacant_pipeline()
+    safe_run(zillow_pipeline, "Zillow Pipeline")
+    safe_run(redfin_pipeline, "Redfin Pipeline")
+    safe_run(probate_pipeline, "Probate Pipeline")
+    safe_run(tax_pipeline, "Tax Delinquent Pipeline")
+    safe_run(vacant_pipeline, "Vacant Property Pipeline")
 
 
 def run_lead_pipelines():
 
-    logging.info("Running lead pipelines")
+    logging.info("Lead pipelines starting")
 
-    fb_marketplace_pipeline()
-    finance_pipeline()
-    investor_pipeline()
-    referral_pipeline()
+    safe_run(fb_marketplace_pipeline, "Facebook Marketplace Pipeline")
+    safe_run(finance_pipeline, "Finance Lead Pipeline")
+    safe_run(investor_pipeline, "Investor Network Pipeline")
+    safe_run(referral_pipeline, "Referral Pipeline")
 
 
 def run_marketing_pipelines():
 
-    logging.info("Running marketing pipelines")
+    logging.info("Marketing pipelines starting")
 
-    fb_ads_pipeline()
-    google_ads_pipeline()
-    tiktok_ads_pipeline()
+    safe_run(fb_ads_pipeline, "Facebook Ads Pipeline")
+    safe_run(google_ads_pipeline, "Google Ads Pipeline")
+    safe_run(tiktok_ads_pipeline, "TikTok Ads Pipeline")
 
 
 def run_all_pipelines():
 
-    logging.info("Starting ALL pipelines")
+    logging.info("========== STARTING ALL PIPELINES ==========")
 
     start_time = datetime.utcnow()
 
@@ -82,8 +100,11 @@ def run_all_pipelines():
 
     end_time = datetime.utcnow()
 
-    logging.info(f"All pipelines finished. Runtime: {end_time - start_time}")
+    runtime = end_time - start_time
+
+    logging.info(f"========== PIPELINES FINISHED | Runtime: {runtime} ==========")
 
 
 if __name__ == "__main__":
+
     run_all_pipelines()
