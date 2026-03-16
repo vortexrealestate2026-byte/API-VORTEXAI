@@ -1,22 +1,19 @@
 from app.models.deal import Deal
 from app.models.buyer import Buyer
+from app.database import SessionLocal
 
 
-def match_buyers_to_deal(deal, buyers):
+def match_buyers():
 
-    matched = []
+    db = SessionLocal()
 
-    for buyer in buyers:
+    deals = db.query(Deal).all()
+    buyers = db.query(Buyer).all()
 
-        if buyer.city.lower() == deal.city.lower():
-            matched.append(buyer)
+    for deal in deals:
 
-    return matched
+        for buyer in buyers:
 
+            if deal.city == buyer.city:
 
-def send_deal_to_buyers(deal, buyers):
-
-    matches = match_buyers_to_deal(deal, buyers)
-
-    for buyer in matches:
-        print(f"Sending deal {deal.title} to {buyer.email}")
+                print(f"Match found: {buyer.email} -> {deal.address}")
