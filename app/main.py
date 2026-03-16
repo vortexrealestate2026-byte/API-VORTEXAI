@@ -1,8 +1,7 @@
 from fastapi import FastAPI
 
-app = FastAPI(title="Vortex AI Platform")
-
+app = FastAPI()
 
 @app.get("/")
-def root():
-    return {"message": "Vortex AI Platform Running"}
+def read_root():
+    return {"message": "Vortex AI API running"}
