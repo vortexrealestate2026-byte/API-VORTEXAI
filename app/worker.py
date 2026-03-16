@@ -1,14 +1,24 @@
+import time
+import logging
 
-from fastapi import FastAPI
-from .routes import deals, buyers, finance, auth
+from app.pipelines.pipeline_manager import run_all_pipelines
 
-app = FastAPI(title="Rocket Autonomous API")
 
-app.include_router(auth.router)
-app.include_router(deals.router)
-app.include_router(buyers.router)
-app.include_router(finance.router)
+logging.basicConfig(level=logging.INFO)
 
-@app.get("/health")
-def health():
-    return {"status":"running"}
+
+def start_worker():
+
+    while True:
+
+        logging.info("Starting pipeline cycle")
+
+        run_all_pipelines()
+
+        logging.info("Sleeping 30 minutes")
+
+        time.sleep(1800)
+
+
+if __name__ == "__main__":
+    start_worker()
