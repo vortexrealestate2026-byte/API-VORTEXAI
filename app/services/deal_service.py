@@ -1,14 +1,28 @@
-from app.database import SessionLocal
-
 def get_deals():
-    db = SessionLocal()
+    """
+    Temporary mock deals.
+    Eventually this will pull from database.
+    """
 
-    # placeholder data until database models are added
     deals = [
-        {"address": "123 Main St", "price": 150000},
-        {"address": "456 Oak Ave", "price": 200000}
+        {
+            "id": 1,
+            "vehicle": "2022 BMW M3",
+            "price": 72000,
+            "mileage": 15000
+        },
+        {
+            "id": 2,
+            "vehicle": "2021 Tesla Model S",
+            "price": 68000,
+            "mileage": 12000
+        },
+        {
+            "id": 3,
+            "vehicle": "2023 Porsche 911",
+            "price": 132000,
+            "mileage": 5000
+        }
     ]
 
-    db.close()
-
-    return {"deals": deals}
+    return deals
