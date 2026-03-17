@@ -1,16 +1,7 @@
-import datetime
+def pipeline_status():
 
-pipeline_logs = []
-
-
-def log_pipeline(name):
-
-    pipeline_logs.append({
-        "pipeline": name,
-        "time": datetime.datetime.utcnow()
-    })
-
-
-def get_logs():
-
-    return pipeline_logs
+    return {
+        "scraper": "running",
+        "deal_analyzer": "ready",
+        "buyer_match_ai": "ready"
+    }
