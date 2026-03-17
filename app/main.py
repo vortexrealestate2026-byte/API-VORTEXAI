@@ -9,6 +9,9 @@ app = FastAPI(
 
 @app.get("/")
 def root():
-    return {"message": "Vortex AI API Running"}
+    return {
+        "message": "Vortex AI API Running"
+    }
 
+# Register routes
 app.include_router(deals_router)
