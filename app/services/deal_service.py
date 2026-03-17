@@ -1,7 +1,7 @@
 def get_deals():
     """
     Temporary mock deals.
-    Eventually this will pull from database.
+    Eventually this will pull from a database.
     """
 
     deals = [
