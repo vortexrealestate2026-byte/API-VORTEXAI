@@ -1,28 +1,14 @@
 from app.database import SessionLocal
-from app.models.deal import Deal
 
-
-def create_deal(data):
-
+def get_deals():
     db = SessionLocal()
 
-    deal = Deal(**data)
-
-    db.add(deal)
-    db.commit()
-    db.refresh(deal)
+    # placeholder data until database models are added
+    deals = [
+        {"address": "123 Main St", "price": 150000},
+        {"address": "456 Oak Ave", "price": 200000}
+    ]
 
     db.close()
 
-    return deal
-
-
-def get_all_deals():
-
-    db = SessionLocal()
-
-    deals = db.query(Deal).all()
-
-    db.close()
-
-    return deals
+    return {"deals": deals}
