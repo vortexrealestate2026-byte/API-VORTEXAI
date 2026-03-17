@@ -1,8 +1,17 @@
 from fastapi import APIRouter
-from app.ai.deal_scoring_ai import score_deal
+from services.deal_service import get_deals
+from services.deal_analyzer import analyze_deal
 
-router = APIRouter(prefix="/ai")
+router = APIRouter(prefix="/deals", tags=["Deals"])
 
-@router.post("/score-deal")
-def score(data: dict):
-    return score_deal(data)
+@router.get("/")
+def list_deals():
+    return get_deals()
+
+@router.post("/analyze")
+def analyze(data: dict):
+    return analyze_deal(
+        data["price"],
+        data["arv"],
+        data["repair"]
+    )
