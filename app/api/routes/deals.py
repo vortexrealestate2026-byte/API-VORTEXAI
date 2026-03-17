@@ -1,7 +1,10 @@
 from fastapi import APIRouter
-from services.deal_service import get_deals
+from app.services.deal_service import get_deals
 
-router = APIRouter(prefix="/deals", tags=["Deals"])
+router = APIRouter(
+    prefix="/deals",
+    tags=["Deals"]
+)
 
 @router.get("/")
 def deals():
