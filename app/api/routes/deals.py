@@ -7,5 +7,8 @@ router = APIRouter(
 )
 
 @router.get("/")
-def deals():
+def get_all_deals():
+    """
+    Endpoint to retrieve available deals.
+    """
     return get_deals()
