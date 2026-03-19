@@ -1,3 +1,4 @@
-from sqlalchemy.orm import declarative_base
+# Single source of truth for SQLAlchemy Base - imported from database module
+from app.database.database import Base
 
-Base = declarative_base()
+__all__ = ["Base"]
