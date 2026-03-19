@@ -13,8 +13,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-# Default: run the API
-# Override via Railway service start command:
-#   Worker:    celery -A app.tasks.celery_app worker --loglevel=info --concurrency=4
-#   Beat:      celery -A app.tasks.celery_app beat --loglevel=info
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
+# Use shell form so $PORT env var is expanded at runtime
+# Worker/Beat services override this via Railway service start command
+CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]  
