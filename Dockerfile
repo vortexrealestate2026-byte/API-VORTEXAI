@@ -2,17 +2,22 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Install system deps
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
+    g++ \
     libpq-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# Copy requirements first for better caching
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Copy application code
 COPY . .
 
-# Use shell form so $PORT env var is expanded at runtime
-# Worker/Beat services override this via Railway service start command
-CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8080}"]  
+# Expose port
+EXPOSE 8080
+
+# Start command (overridden by railway.toml startCommand)
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080"]
